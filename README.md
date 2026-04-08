@@ -4,21 +4,20 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [v0](https://v
 
 ## GitHub Pages deployment
 
-This project is configured to build a static export on the `deploy` branch with GitHub Actions and publish the generated site into `docs/`.
+This project is configured to build a static export from the `deploy` branch with GitHub Actions and deploy it to GitHub Pages using the official Pages workflow.
 
 ### How it works
 
 - Push to `deploy`
-- GitHub Actions installs dependencies and runs `pnpm build`
-- The generated `out/` directory is copied into `docs/` on the same `deploy` branch
-- GitHub Pages serves from the `deploy` branch `docs/` folder
+- GitHub Actions runs a `build` job and creates the static `out/` directory
+- The workflow uploads the build output as a Pages artifact
+- A separate `deploy` job publishes that artifact to GitHub Pages
 
 ### Repository settings
 
 1. Open `Settings > Pages` in GitHub.
-2. Set `Source` to `Deploy from a branch`.
-3. Select branch `deploy` and folder `/docs`.
-4. Save.
+2. Set `Source` to `GitHub Actions`.
+3. Save.
 
 ### Base path behavior
 
