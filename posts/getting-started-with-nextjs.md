@@ -4,7 +4,7 @@ date: "2024-12-15"
 summary: "Learn how to build modern web applications with Next.js 15, the React framework for production."
 tags: ["nextjs", "react", "web-development", "tutorial"]
 thumbnail: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&h=400&fit=crop"
-relatedPosts: ["understanding-server-components", "tailwind-css-best-practices"]
+relatedPosts: ["understanding-server-components", "tailwind-css-best-practices", "prompt-engineering-for-developers"]
 ---
 
 # Getting Started with Next.js 15

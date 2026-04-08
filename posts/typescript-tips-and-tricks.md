@@ -4,6 +4,7 @@ date: "2024-11-28"
 summary: "Level up your TypeScript skills with these practical tips, patterns, and best practices."
 tags: ["typescript", "javascript", "web-development"]
 thumbnail: "https://images.unsplash.com/photo-1516116216624-53e697fedbea?w=800&h=400&fit=crop"
+relatedPosts: ["prompt-engineering-for-developers", "getting-started-with-nextjs"]
 ---
 
 # TypeScript Tips and Tricks for Better Code

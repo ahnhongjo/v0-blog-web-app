@@ -1,0 +1,67 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches:
+      - deploy
+    paths-ignore:
+      - docs/**
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ github.ref }}
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Enable pnpm
+        run: corepack enable
+
+      - name: Set Pages base path
+        run: |
+          if [ -n "${{ vars.BASE_PATH }}" ]; then
+            echo "BASE_PATH=${{ vars.BASE_PATH }}" >> "$GITHUB_ENV"
+          elif [ "${{ github.event.repository.name }}" = "${{ github.repository_owner }}.github.io" ]; then
+            echo "BASE_PATH=" >> "$GITHUB_ENV"
+          else
+            echo "BASE_PATH=/${{ github.event.repository.name }}" >> "$GITHUB_ENV"
+          fi
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build static site
+        run: pnpm build
+
+      - name: Publish static files to docs
+        run: |
+          rm -rf docs
+          mkdir -p docs
+          cp -R out/. docs/
+          touch docs/.nojekyll
+
+      - name: Commit published site
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs
+          if git diff --cached --quiet; then
+            echo "No changes to publish"
+            exit 0
+          fi
+          git commit -m "Deploy GitHub Pages"
+          git push origin HEAD:${{ github.ref_name }}
